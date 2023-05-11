@@ -1,0 +1,32 @@
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.highgui.HighGui;
+import org.opencv.videoio.VideoCapture;
+
+public class Camera {
+    static {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+    }
+
+    public static void main(String[] args) {
+        VideoCapture camera = new VideoCapture(0); // Abrir la cámara por defecto
+        if (!camera.isOpened()) {
+            System.err.println("No se puede abrir la cámara");
+            System.exit(-1);
+        }
+
+        Mat frame = new Mat();
+        while (true) {
+            if (camera.read(frame)) { // Leer un frame de la cámara
+                HighGui.imshow("Cámara", frame); // Mostrar el frame en una ventana
+            }
+
+            if (HighGui.waitKey(1) == 27) { // Esperar 1ms y comprobar si se pulsó ESC
+                break;
+            }
+        }
+
+        camera.release(); // Liberar la cámara
+        HighGui.destroyAllWindows(); // Cerrar todas las ventanas
+    }
+}
