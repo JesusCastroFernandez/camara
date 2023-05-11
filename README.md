@@ -1,0 +1,2 @@
+# camara
+Cámara de fotos
